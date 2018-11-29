@@ -48,6 +48,45 @@ class DomNodeCollection {
       el.attr(name, value);
     });
   }
+
+  children () {
+    let childNodes = [];
+    for (var i = 0; i < this.els.length; i++) {
+      if (this.els[i].children === null) {
+        continue;
+      } else {
+        childNodes.push(this.els[i].children);
+      }
+    }
+
+    return new DomNodeCollection(childNodes);
+  }
+
+  parent () {
+    let parentNodes = [];
+    for (var i = 0; i < this.els.length; i++) {
+      if (this.els[i].parentNode === null) {
+        continue;
+      } else {
+        parentNodes.push(this.els[i].parentNode);
+      }
+    }
+
+    return new DomNodeCollection(parentNodes);
+  }
+
+  find (selector) {
+    let select = document.querySelectorAll(selector);
+    let selectedArray = Array.from(select);
+    return new DomNodeCollection(selectedArray);
+  }
+
+  remove () {
+    this.empty();
+    for (var i = 0; i < this.els.length; i++) {
+      this.els = [];
+    }
+  }
 }
 
 module.exports = DomNodeCollection;
